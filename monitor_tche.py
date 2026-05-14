@@ -88,6 +88,9 @@ if os.path.exists(archivo_anterior):
         anteriores = dict(zip(df_anterior["codigo"], df_anterior["precio"]))
         actuales = dict(zip(df_nuevo["codigo"], df_nuevo["precio"]))
 
+        # =========================
+        # CAMBIOS
+        # =========================
         cambios = 0
         for codigo, precio_nuevo in actuales.items():
             if codigo in anteriores:
@@ -97,14 +100,19 @@ if os.path.exists(archivo_anterior):
                     if not fila_actual.empty:
                         fila = fila_actual.iloc[0]
                         texto = (
-                            f"🔄 CAMBIO\n"
-                            f"{fila['marca']} - {fila['nombre']}\n"
-                            f"{precio_viejo} → {precio_nuevo}\n\n"
+                            f"🏪 *CAMBIO EN TCHELOCO*\n"
+                            f"📦 *Producto:* {fila['nombre']}\n"
+                            f"🏷️ *Marca:* {fila['marca']}\n"
+                            f"💰 *Antes:* {precio_viejo}\n"
+                            f"💵 *Ahora:* {precio_nuevo}\n\n"
                         )
                         print(texto)
                         mensaje_telegram += texto
                         cambios += 1
 
+        # =========================
+        # NUEVOS
+        # =========================
         nuevos = 0
         for codigo in actuales:
             if codigo not in anteriores:
@@ -112,21 +120,29 @@ if os.path.exists(archivo_anterior):
                 if not fila_actual.empty:
                     fila = fila_actual.iloc[0]
                     texto = (
-                        f"🆕 NUEVO\n"
-                        f"{fila['marca']} - {fila['nombre']}\n"
-                        f"{fila['precio']}\n\n"
+                        f"🏪 *NUEVO EN TCHELOCO*\n"
+                        f"📦 *Producto:* {fila['nombre']}\n"
+                        f"🏷️ *Marca:* {fila['marca']}\n"
+                        f"💵 *Precio:* {fila['precio']}\n\n"
                     )
                     print(texto)
                     mensaje_telegram += texto
                     nuevos += 1
 
+        # =========================
+        # ELIMINADOS
+        # =========================
         eliminados = 0
         for codigo in anteriores:
             if codigo not in actuales:
                 fila_vieja = df_anterior[df_anterior["codigo"] == codigo]
                 if not fila_vieja.empty:
                     fila = fila_vieja.iloc[0]
-                    texto = f"❌ ELIMINADO\n" f"{fila['marca']} - {fila['nombre']}\n\n"
+                    texto = (
+                        f"🏪 *ELIMINADO EN TCHELOCO*\n"
+                        f"📦 *Producto:* {fila['nombre']}\n"
+                        f"🏷️ *Marca:* {fila['marca']}\n\n"
+                    )
                     print(texto)
                     mensaje_telegram += texto
                     eliminados += 1
@@ -169,7 +185,11 @@ if mensaje_telegram.strip():
 
         for num_parte, parte in enumerate(partes, 1):
             response_tg = requests.post(
-                url_telegram, data={"chat_id": CHAT_ID, "text": parte}
+                url_telegram, data={
+                    "chat_id": CHAT_ID, 
+                    "text": parte,
+                    "parse_mode": "Markdown"
+                }
             )
             if response_tg.status_code == 200:
                 print(f"Parte {num_parte} de Telegram enviada")

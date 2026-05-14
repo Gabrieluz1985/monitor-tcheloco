@@ -7,8 +7,8 @@ import os
 # TELEGRAM
 # =========================
 
-TOKEN = "8709633955:AAHA899BdN4parMnGu5zllkpLIDLRI8Fm8Q"
-CHAT_ID = "6519393068"
+TOKEN = os.getenv("8709633955:AAHA899BdN4parMnGu5zllkpLIDLRI8Fm8Q")
+CHAT_ID = os.getenv("6519393068")
 
 mensaje_telegram = ""
 

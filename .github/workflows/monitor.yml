@@ -28,7 +28,10 @@ jobs:
           pip install requests pandas beautifulsoup4
 
       - name: Run monitor
-        run: python monitor_tche.py
+  env:
+    TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+    TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  run: python monitor_tche.py
 
       - name: Commit updated CSV
         run: |

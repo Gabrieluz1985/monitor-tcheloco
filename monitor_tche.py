@@ -4,10 +4,10 @@ import pandas as pd
 import os
 
 # =========================
-# TELEGRAM (CORREGIDO PARA GITHUB ACTIONS)
+# TELEGRAM (CORREGIDO DE FORMA DEFINITIVA)
 # =========================
-TOKEN = os.getenv("8709633955:AAHA899BdN4parMnGu5zllkpLIDLRI8Fm8Q")
-CHAT_ID = os.getenv("6519393068")
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 mensaje_telegram = ""
 
@@ -155,6 +155,10 @@ if mensaje_telegram.strip():
         print("Error: TOKEN o CHAT_ID no configurados en el entorno.")
     else:
         url_telegram = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+
+        # Imprime de forma segura las credenciales cargadas
+        print(f"DEBUG: Token cargado (longitud): {len(TOKEN) if TOKEN else 0}")
+        print(f"DEBUG: Chat ID cargado: {CHAT_ID}")
 
         # Divide el mensaje si supera los 4000 caracteres para evitar bloqueos de la API
         MAX_LENGTH = 4000

@@ -6,8 +6,8 @@ import os
 # =========================
 # TELEGRAM (CORREGIDO PARA GITHUB ACTIONS)
 # =========================
-TOKEN = os.getenv("TELEGRAM_TOKEN")
-CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+TOKEN = os.getenv("8709633955:AAHA899BdN4parMnGu5zllkpLIDLRI8Fm8Q")
+CHAT_ID = os.getenv("6519393068")
 
 mensaje_telegram = ""
 
